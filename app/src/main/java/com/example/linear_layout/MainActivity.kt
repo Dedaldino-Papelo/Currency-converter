@@ -12,19 +12,28 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        convert()
+        binding.buttonEuro.setOnClickListener {
+            convert(0.8)
+        }
+
+        binding.buttonReal.setOnClickListener {
+            convert(5.0)
+        }
+
+        binding.buttonPeso.setOnClickListener {
+            convert(10.2)
+        }
     }
 
-    private fun convert() {
-        binding.buttonConverter.setOnClickListener {
-            val euros = binding.editValue.text.toString().trim()
+    private fun convert(tax: Double) {
+            val value = binding.editValue.text.toString().trim()
 
-            if(euros.isNotEmpty()) {
-                val dollar = euros.toDouble() * 0.8
-                binding.textResult.text = "$dollar $"
+            if(value.isNotEmpty()) {
+                val result = value.toDouble() * tax
+                val formatResult = String.format("%.2f", result)
+                binding.textResult.text = "$formatResult $"
             } else {
                 Toast.makeText(applicationContext, "Invalid Number", Toast.LENGTH_SHORT)
             }
-        }
     }
 }
